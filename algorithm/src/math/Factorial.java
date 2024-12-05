@@ -4,6 +4,10 @@ import java.math.BigInteger;
 
 public class Factorial {
 
+    /*
+        BigInteger는 40000! 까지 처리할 수 있다.
+     */
+
     class Solution {
         public int solution(int balls, int share) {
 

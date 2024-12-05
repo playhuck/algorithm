@@ -1,5 +1,6 @@
-import java.lang.reflect.Array;
 import java.math.BigInteger;
+import java.net.Inet4Address;
+import java.sql.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,36 +12,46 @@ public class Main {
 
         Solution solution = new Solution();
 
-//        System.out.println((solution.solution(new int[]{3, 6})));
-//        System.out.println(solution.solution(new int[]{1, 2, 3}, 5));
-        System.out.println(solution.solution(30, 29));
+//        System.out.println((Arrays.toString(solution.solution(
+//                new int[][]{{80, 70}, {70, 80}, {30, 50}, {90, 100}, {100, 90}, {100, 100}, {10, 30}}
+//        ))));
+        System.out.println(Arrays.toString(solution.solution(new int[]{1, 2, 3, 4, 5, 6}, 4)));
+//                System.out.println(Arrays.toString(solution.solution(new String[]{"right", "right", "right", "right", "right", "left"}, new int[]{9, 5})));
+//        System.out.println(Arrays.toString(new String[]{solution.solution(
+//                new String[]{"meosseugi", "1234"},
+//                new String[][]{{"rardss", "123"}, {"yyoom", "1234"}, {"meosseugi", "1234"}})}));
+//        System.out.println(solution.solution(7, 20));
 //        System.out.println(Arrays.toString(solution.solution("abc1Addfggg4556b", 6)));
 //        System.out.println(solution.solution("onefourzerosixseven"));
+//          System.out.println(solution.solution(1081));
 //        System.out.println(Arrays.toString(solution.solution(123, 48, 1343, 18)));
 //                System.out.println(solution.solution("allpe", "apple"));
-//                        System.out.println(Arrays.toString(solution.solution(420)));
+//                        System.out.println(solution.solution(40));
 
     }
 
     static class Solution {
-        public int solution(int balls, int share) {
+        public int[] solution(int[] numlist, int n) {
 
-            if(balls == 1) return 1;
-            if(share == 1) return balls;
-            if(balls == share) return 1;
+            int[] answer = new int[numlist.length];
 
-            BigInteger n = getFactorial(balls);
-            BigInteger r = getFactorial(share);
-            BigInteger nmr = getFactorial(balls - share);
-
-            return n.divide(r.multiply(nmr)).intValue();
-        }
-
-        public BigInteger getFactorial(int n) {
-            BigInteger result = BigInteger.ONE;
-            for(int i = 2; i <= n; i++) {
-                result = result.multiply(BigInteger.valueOf(i));
+            if (n == numlist[0]) {
+                return numlist;
             }
-            return result;        }
+
+            Map<Integer, Integer> numMap = new LinkedHashMap<>();
+
+            for (Integer i : numlist) {
+                numMap.put(i, Math.abs(i - n));
+            }
+
+            return numMap.entrySet().stream()
+                    .sorted((a, b) -> {
+                        int comparison = a.getValue().compareTo(b.getValue());
+                        return comparison != 0 ? comparison : b.getKey().compareTo(a.getKey());
+                    })
+                    .mapToInt(Map.Entry::getKey)
+                    .toArray();
+        }
     }
 }
