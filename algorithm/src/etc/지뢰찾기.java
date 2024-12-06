@@ -1,40 +1,11 @@
-import java.math.BigInteger;
-import java.net.Inet4Address;
-import java.sql.Array;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+package etc;
 
-public class Main {
-    public static void main(String[] args) {
+import java.util.HashMap;
+import java.util.Map;
 
-        Solution solution = new Solution();
+public class 지뢰찾기 {
 
-        System.out.println((solution.solution(
-                new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 1, 1, 0}, {0, 0, 0, 0, 0}}
-        )));
-//        System.out.println((Arrays.toString(solution.solution(
-//                new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 0, 0, 0}}
-//        ))));
-//        System.out.println(Arrays.toString(solution.solution(new int[]{1, 2, 3, 4, 5, 6}, 4)));
-//          System.out.println(solution.solution(new int[]{0, 0, 2, 2}));
-//        System.out.println(Arrays.toString(solution.solution(new String[]{"right", "right", "right", "right", "right", "left"}, new int[]{9, 5})));
-//        System.out.println(Arrays.toString(new String[]{solution.solution(
-//                new String[]{"meosseugi", "1234"},
-//                new String[][]{{"rardss", "123"}, {"yyoom", "1234"}, {"meosseugi", "1234"}})}));
-//        System.out.println(solution.solution(7, 20));
-//        System.out.println(Arrays.toString(solution.solution("abc1Addfggg4556b", 6)));
-//        System.out.println(solution.solution("+ 13x + 7 + x + x + 1 + 2 +"));
-//        System.out.println(solution.solution(1081));
-//        System.out.println(Arrays.toString(solution.solution(123, 48, 1343, 18)));
-//        System.out.println(solution.solution("allpe", "apple"));
-//        System.out.println(solution.solution(40));
-
-    }
-
-    /*
+     /*
         1일 때 [i,j-1], [i, j+1], [i - 1, j], [i -1, j -1], [i -1, j +1], [i + 1, j] [i + 1, j -1], [i + 1, j + 1], [i, j]
         단 여기서,
             - i가 0보다 작아지면 안되고
@@ -90,4 +61,5 @@ public class Main {
             return Math.max(surviveCount, 0);
         }
     }
+
 }
