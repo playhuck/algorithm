@@ -1,15 +1,9 @@
+package bruteforce;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Solution {
-
-    public static void main(String[] args) {
-
-        System.out.println(countGoodRectangles(
-                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-        ));
-    }
-
+public class Brute_Force_1725 {
     /*
        여러 개의 직사각형 정보가 담긴 배열 rectangles가 주어집니다. 각 직사각형의 정보는 rectangles[i] = [li, wi] 형태로 주어지는데,
        이는 i번째 직사각형의 길이가 li이고 너비가 wi라는 뜻입니다.이 직사각형들을 잘라서 정사각형을 만들 수 있습니다. 단, 정사각형의 한 변의 길이를 k라고 할 때,
