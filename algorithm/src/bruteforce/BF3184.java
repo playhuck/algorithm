@@ -1,19 +1,6 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package bruteforce;
 
-public class Solution {
-
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-        System.out.println(countCompleteDayPairs(
-                new int[]{12,12,30,24,24}
-        ));
-    }
-
+public class BF3184 {
     /*
         시간 단위로 표현된 정수 배열 hours가 주어집니다. i < j 조건을 만족하는 쌍 i, j에 대해, hours[i] + hours[j]가 완전한 하루를 이루는 쌍의 개수를 반환하세요.
         여기서 완전한 하루란 정확히 24시간의 배수가 되는 시간을 의미합니다.
