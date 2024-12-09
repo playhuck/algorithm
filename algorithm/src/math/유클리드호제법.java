@@ -15,26 +15,32 @@ public class 유클리드호제법 {
             return answer;
         }
 
-        public int gcd(int p, int q) {
+        public int gcd(int a, int b) {
 
-            if(p < q) {
-                int tmp = p;
-                p = q;
-                q = tmp;
+            // 1. 큰 수가 a에 오도록 정렬
+            if(a < b) {
+                int tma = a;
+                a = b;
+                b = tma;
             }
 
-            while (q > 1) {
+            // 2. b가 1보다 큰 동안 반복
+            while (b > 1) {
+                // 3. a(큰수)를 b(작은 수)로 나눈 나머지 계산
+                int rest = a % b;
 
-                int rest = p % q;
+                // 4. 나머지가 0이면 b가 최대공약수
                 if(rest == 0) {
-                    return q;
+                    return b;
                 }
-                p = q;
-                q = rest;
 
+                // 5. a(큰 수)에 b(작은 수)를 대입, b(작은 수)에 나머지(rest)를 대입
+                a = b;
+                b = rest;
             }
 
-            return q;
+            // 6. 최종적으로 남은 b가 최대공약수
+            return b;
         }
     }
 

@@ -15,9 +15,9 @@ public class Main {
 //        System.out.println((Arrays.toString(solution.solution(
 //                new String[]{"3 - 4 = -3", "5 + 6 = 11"}
 //        ))));
-        System.out.println((solution.solution(
-                new int[][]{{-5, 5}, {2, 8}, {6, 7}}
-        )));
+//        System.out.println((solution.solution(
+//                new int[][]{{1, 1}, {2,2}, {3,3}, {4,4}}
+//        )));
 //        System.out.println((Arrays.toString(solution.solution(
 //                new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 0, 0, 0}}
 //        ))));
@@ -33,59 +33,66 @@ public class Main {
 //        System.out.println(solution.solution(1081));
 //        System.out.println(Arrays.toString(solution.solution(123, 48, 1343, 18)));
 //        System.out.println(solution.solution("allpe", "apple"));
+          System.out.println(solution.solution(7, 22));
 //        System.out.println(solution.solution(40));
 
     }
 
     static class Solution {
-        public int solution(int[][] lines) {
 
-            List<Event> events = new ArrayList<>();
-            for (int i = 0; i < lines.length; i++) {
-                events.add(new Event(lines[i][0], true, i));   // 시작점
-                events.add(new Event(lines[i][1], false, i));  // 끝점
+        /*
+            유한소수가 되기 위한 분수의 조건은 다음과 같습니다. 기약분수로 나타내었을 때, 분모의 소인수가 2와 5만 존재해야 합니다.
+            분자와 분모의 최대공약수로 약분하면 기약분수를 만들 수 있습니다.
+            정수도 유한소수로 분류합니다.
+         */
+        public int solution(int a, int b) {
+
+            int max = Math.max(a, b);
+            int min = Math.min(a, b);
+
+            while (min > 1) {
+
+                int r = max % min;
+
+                if(r == 0) {
+                    break;
+                }
+
+                max = min;
+                min = r;
             }
 
-            events.sort((a, b) -> {
+            int denominator = b / min;
 
-                if (a.point != b.point) return a.point - b.point;
-                else return a.isStart ? 1 : -1;
-            });
+            List<Integer> factors = new ArrayList<>();
 
-            int activeLines = 0;
-            int start = 0;
-            int totalLength = 0;
+            while (denominator % 2 == 0) {
+                denominator /= 2;
+                factors.add(2);
+            }
 
-            for (Event event : events) {
+            for (int i = 3; i <= Math.sqrt(b); i+=2) {
 
-                if(event.isStart) {
-                    activeLines ++;
-                    if(activeLines == 2) {
-                        start = event.point;
-                    }
-                } else {
-                    activeLines--;
-                    if (activeLines == 1) {  // 겹치는 구간이 끝날 때
-                        if (event.point > start) {  // 유효한 겹치는 구간인 경우
-                            totalLength += event.point - start;
-                        }
-                    }
+                while (denominator % i == 0) {
+                    denominator /= i;
+                    factors.add(i);
                 }
             }
 
-            return totalLength;
-        }
-
-        static class Event {
-            int point;   // 좌표
-            boolean isStart;  // true=시작점, false=끝점
-            int index;   // 선분 번호
-
-            public Event(int i, boolean b, int i1) {
-                point = i;
-                isStart = b;
-                index = i1;
+            if (denominator > 1) {
+                factors.add(denominator);
             }
+
+            Pattern pattern = Pattern.compile("[25]+");
+
+            for(Integer factor : factors) {
+
+                if(!pattern.matcher(String.valueOf(factor)).matches()) {
+                    return 2;
+                }
+            }
+
+            return 1;
         }
     }
 }
