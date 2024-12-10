@@ -1,33 +1,42 @@
+package bruteforce;
+
 import java.math.BigInteger;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Solution {
-
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-//        System.out.println(countCharacters(
-//                new String[]{"cat","bt","hat","tree"}
-//        ));
-//        System.out.println(minNumber(
-//                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
-//        ));
-//        System.out.println(minNumber(
-//                new int[]{3,5,2,6}, new int[]{3,1,7}
-//        ));
-        System.out.println(addToArrayForm(
-                new int[]{9,9,9,9,9,9,9,9,9,9}, 1
-        ));
-//        System.out.println(captureForts(
-//                new int[]{-1,-1,0,1,0,0,1,-1,1,0}
-//        ));
-    }
+public class BF989 {
 
     /*
-        자릿수 분해의 원리
+
+        BigInteger를 사용한, 날먹 방식
+
+        정수의 배열 형태(array-form)란 해당 정수의 각 자릿수를 왼쪽에서 오른쪽 순서로 나타낸 배열을 의미합니다.
+
+        예를 들어, num = 1321의 배열 형태는 [1,3,2,1]입니다.
+
+        정수의 배열 형태인 num과 정수 k가 주어질 때, num + k의 배열 형태를 반환하세요. Copy
+     */
+
+    public static List<Integer> addToArrayForm(int[] num, int k) {
+
+        String[] strings = Arrays
+                .stream(num)
+                .mapToObj(String::valueOf)
+                .toArray(String[]::new);
+
+        BigInteger parseNum = new BigInteger(String.join("", strings));
+
+        BigInteger numK = parseNum.add(BigInteger.valueOf(k));
+
+        return Arrays
+                .stream(String.valueOf(numK).split(""))
+                .map(Integer::parseInt)
+                .toList();
+    }
+
+     /*
+        자릿수 분해의 원리를 사용한 메모리 효율 극강 방식
 
         각 단계에서:
 
@@ -53,7 +62,7 @@ public class Solution {
         맨 앞에 1을 추가해야 하는데, LinkedList를 사용하면 이 작업이 매우 효율적
      */
 
-    public static List<Integer> addToArrayForm(int[] num, int k) {
+    public static List<Integer> addToArrayForm2(int[] num, int k) {
 
         List<Integer> result = new LinkedList<>();
 
@@ -73,4 +82,5 @@ public class Solution {
 
         return result;
     }
+
 }
