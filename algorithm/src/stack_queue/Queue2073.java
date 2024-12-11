@@ -1,35 +1,10 @@
-import java.math.BigInteger;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
+package stack_queue;
 
-public class Solution {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-//        System.out.println(new RecentCounter().ping(
-//                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
-//        ));
-//        System.out.println(firstUniqChar(
-//                "loveleetcode"
-//        ));
-//        System.out.println(minNumber(
-//                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
-//        ));
-//        System.out.println(countStudents(
-//                new int[]{1,1,1,0,0,1}, new int[]{1,0,0,0,1,1}
-//        ));
-        System.out.println(timeRequiredToBuy(
-                new int[]{5,1,1,1}, 0
-        ));
-//        System.out.println(captureForts(
-//                new int[]{-1,-1,0,1,0,0,1,-1,1,0}
-//        ));
-    }
-
+public class Queue2073 {
     /*
         n명의 사람들이 티켓을 구매하기 위해 줄을 서 있습니다. 여기서 0번째 사람은 줄의 맨 앞에 있고, (n - 1)번째 사람은 줄의 맨 뒤에 있습니다.
         길이가 n인 0부터 시작하는 정수 배열 tickets가 주어지며, 여기서 i번째 사람이 구매하고 싶은 티켓의 수는 tickets[i]입니다.
