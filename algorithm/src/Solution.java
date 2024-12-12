@@ -72,38 +72,21 @@ public class Solution {
                 rootCount++;
             }
 
-            if(cur.left != null) {
+            if (cur.left != null) {
                 stack.push(cur);
                 cur = cur.left;
                 continue;
             }
 
-            /*
-                여기부터는 cur.left가 Null이라는 가정, 올라가야 한다.
-                왼쪽 끝에서, 오른쪽 까지 없는 경우, 일반적으로 바로 nodeMap.put한다.
-                근데 혹시 모르니 포함여부 확인 포함 없다면 추가 아니면 위로
-             */
-            if(Objects.isNull(cur.right)){
-                if(!nodeMap.containsKey(cur.val)){
-                    nodeMap.put(cur.val, cur.val);
-                }
-                if(!stack.isEmpty()){
-                    cur = stack.pop();
-                }
+            if (Objects.isNull(cur.right)) {
 
-                /*
-                    근데 오른쪽이 있다면
-                 */
-            } else {
-
-                if(!nodeMap.containsKey(cur.val)){
+                if (!nodeMap.containsKey(cur.val)) {
                     nodeMap.put(cur.val, cur.val);
+                    if(!stack.isEmpty()){
+                        cur = stack.pop();
+                    }
                 }
-                stack.push(cur);
-                cur = cur.right;
-                continue;
             }
-
 
         }
 
