@@ -1,6 +1,8 @@
+import javax.swing.tree.TreeNode;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Solution {
@@ -13,8 +15,8 @@ public class Solution {
 //        System.out.println(new RecentCounter().ping(
 //                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
 //        ));
-//        System.out.println(firstUniqChar(
-//                "loveleetcode"
+//        System.out.println(inorderTraversal(
+//                "(()})"
 //        ));
 //        System.out.println(minNumber(
 //                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
@@ -22,62 +24,110 @@ public class Solution {
 //        System.out.println(countStudents(
 //                new int[]{1,1,1,0,0,1}, new int[]{1,0,0,0,1,1}
 //        ));
-        System.out.println(timeRequiredToBuy(
-                new int[]{5,1,1,1}, 0
-        ));
+//        System.out.println(timeRequiredToBuy(
+//                new int[]{5,1,1,1}, 0
+//        ));
 //        System.out.println(captureForts(
 //                new int[]{-1,-1,0,1,0,0,1,-1,1,0}
 //        ));
     }
 
     /*
-        n명의 사람들이 티켓을 구매하기 위해 줄을 서 있습니다. 여기서 0번째 사람은 줄의 맨 앞에 있고, (n - 1)번째 사람은 줄의 맨 뒤에 있습니다.
-        길이가 n인 0부터 시작하는 정수 배열 tickets가 주어지며, 여기서 i번째 사람이 구매하고 싶은 티켓의 수는 tickets[i]입니다.
-        각 사람은 티켓 한 장을 구매하는 데 정확히 1초가 걸립니다. 한 사람은 한 번에 1장의 티켓만 구매할 수 있으며,
-        추가 티켓을 구매하기 위해서는 줄의 맨 뒤로 가야 합니다(이는 즉시 이루어집니다). 만약 더 이상 구매할 티켓이 없다면, 그 사람은 줄을 떠납니다.
-        처음에 위치 k(0부터 시작하는 인덱스)에 있던 사람이 티켓 구매를 모두 완료하는 데 걸리는 시간을 반환하세요.
+        이진 트리의 root가 주어질 때, 해당 노드들의 값을 중위 순회한 결과를 반환하세요.
+        1,2,3,4,5,null,8,null,null,6,7,9
+
+            부모 데이터는 stack으로 관리
+            내 현재 노드는 cur로 관리
+
+            cur가 왼쪽이 더 이상 없을 때 자신을 추가하게 된다.
+            그리고 거슬러 올라오면서 부모 노드를 추가한다.
+            부모노드를 추가하고 오른쪽이 있다면 오른쪽 노드로 내려간다.
+            다시 왼쪽이 더이상없을 때 자신을 추가한다...
+            ...
+            반복 후 거슬러 올라오면서 한 번 추가된 노드는 그냥 넘어가고
+            stack도 제거한다.
      */
+    public static List<Integer> inorderTraversal(TreeNode root) {
 
-    public static int timeRequiredToBuy(int[] tickets, int k) {
+        List<Integer> res = new ArrayList<>();
+        if (Objects.isNull(root)) {
+            return res;
+        }
+        if (Objects.isNull(root.left) && Objects.isNull(root.right)) {
+            res.add(root.val);
+            return res;
+        }
 
-        List<Integer> ticketList = new ArrayList<>(Arrays.stream(tickets).boxed().toList());
+        Map<Integer, Integer> nodeMap = new LinkedHashMap<>();
+        Stack<TreeNode> stack = new Stack<>();
 
-        int paySec = 0;
+        TreeNode cur = root;
 
-        int kIdx = k;
+        int rootCount = 0;
+        int treeCount = Objects.isNull(root.left) || Objects.isNull(root.right) ? 2 : 3;
 
-        while (ticketList.get(kIdx) > 0) {
+        while (rootCount < treeCount) {
 
-            if(ticketList.get(0) > 0) {
+            if (cur.equals(root)) {
+                rootCount++;
+            }
 
-                paySec ++;
+            if(cur.left != null) {
+                stack.push(cur);
+                cur = cur.left;
+                continue;
+            }
 
-                int tmp = ticketList.get(0) - 1;
-
-                ticketList.add(tmp);
-                ticketList.remove(0);
-
-                if(kIdx > 0) kIdx --;
-                else {
-
-                    if(tmp == 0) break;
-                    else {
-                        kIdx = ticketList.size() - 1;
-                    }
+            /*
+                여기부터는 cur.left가 Null이라는 가정, 올라가야 한다.
+                왼쪽 끝에서, 오른쪽 까지 없는 경우, 일반적으로 바로 nodeMap.put한다.
+                근데 혹시 모르니 포함여부 확인 포함 없다면 추가 아니면 위로
+             */
+            if(Objects.isNull(cur.right)){
+                if(!nodeMap.containsKey(cur.val)){
+                    nodeMap.put(cur.val, cur.val);
+                }
+                if(!stack.isEmpty()){
+                    cur = stack.pop();
                 }
 
+                /*
+                    근데 오른쪽이 있다면
+                 */
             } else {
 
-                int tmp = ticketList.get(0);
-
-                ticketList.add(tmp);
-                ticketList.remove(0);
-
-                if(kIdx > 0) kIdx --;
+                if(!nodeMap.containsKey(cur.val)){
+                    nodeMap.put(cur.val, cur.val);
+                }
+                stack.push(cur);
+                cur = cur.right;
+                continue;
             }
+
 
         }
 
-        return paySec;
+        return new ArrayList<>(nodeMap.keySet());
     }
+
+
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
 }
