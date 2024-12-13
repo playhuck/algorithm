@@ -53,41 +53,34 @@ public class Solution {
         if (Objects.isNull(root)) {
             return res;
         }
-        if (Objects.isNull(root.left) && Objects.isNull(root.right)) {
-            res.add(root.val);
-            return res;
-        }
 
         Map<Integer, Integer> nodeMap = new LinkedHashMap<>();
         Stack<TreeNode> stack = new Stack<>();
 
-        TreeNode cur = root;
+        TreeNode curr = root;
 
-        int rootCount = 0;
-        int treeCount = Objects.isNull(root.left) || Objects.isNull(root.right) ? 2 : 3;
+        while (root.right != null || root.left != null) {
 
-        while (rootCount < treeCount) {
-
-            if (cur.equals(root)) {
-                rootCount++;
+            while(curr != null) {
+                stack.push(curr);
+                curr = curr.left;
             }
 
-            if (cur.left != null) {
-                stack.push(cur);
-                cur = cur.left;
-                continue;
+            curr = stack.pop();
+            if(!nodeMap.containsKey(curr.val)) {
+                nodeMap.put(curr.val, 1);
+            }
+            curr.left = null;
+
+            if(curr.right != null){
+                stack.push(curr.right);
+                curr = curr.right;
             }
 
-            if (Objects.isNull(cur.right)) {
+        }
 
-                if (!nodeMap.containsKey(cur.val)) {
-                    nodeMap.put(cur.val, cur.val);
-                    if(!stack.isEmpty()){
-                        cur = stack.pop();
-                    }
-                }
-            }
-
+        if(nodeMap.isEmpty()) {
+            nodeMap.put(root.val, 1);
         }
 
         return new ArrayList<>(nodeMap.keySet());
