@@ -25,36 +25,50 @@ public class Stack94_BinaryTreeInOrderTraversal {
             return res;
         }
 
-        Map<Integer, Integer> nodeMap = new LinkedHashMap<>();
         Stack<TreeNode> stack = new Stack<>();
+        Stack<Integer> visitStack = new Stack<>();
 
         TreeNode curr = root;
 
         while (root.right != null || root.left != null) {
 
-            while(curr != null) {
+            while(Objects.nonNull(curr.left)) {
                 stack.push(curr);
                 curr = curr.left;
             }
 
-            curr = stack.pop();
-            if(!nodeMap.containsKey(curr.val)) {
-                nodeMap.put(curr.val, 1);
+            if(curr.val != Integer.MIN_VALUE) {
+                visitStack.push(curr.val);
+                curr.val = Integer.MIN_VALUE;
             }
-            curr.left = null;
-
-            if(curr.right != null){
-                stack.push(curr.right);
+            if(Objects.isNull(curr.right)) {
+                if(!stack.isEmpty()) {
+                    final TreeNode prev = curr;
+                    curr = stack.pop();
+                    if (Objects.equals(curr.left, prev)) {
+                        curr.left = null;
+                    } else if (Objects.equals(curr.right, prev)) {
+                        curr.right = null;
+                    }
+                }
+                if(Objects.equals(curr, root)) {
+                    if(curr.val != Integer.MIN_VALUE){
+                        visitStack.push(curr.val);
+                        curr.val = Integer.MIN_VALUE;
+                    }
+                }
+            } else {
+                stack.push(curr);
                 curr = curr.right;
             }
 
         }
 
-        if(nodeMap.isEmpty()) {
-            nodeMap.put(root.val, 1);
+        if(visitStack.isEmpty()) {
+             visitStack.add(root.val);
         }
 
-        return new ArrayList<>(nodeMap.keySet());
+        return visitStack.stream().toList();
     }
 
 
