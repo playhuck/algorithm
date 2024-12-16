@@ -1,37 +1,11 @@
-import javax.swing.tree.TreeNode;
-import java.math.BigInteger;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+package stack_queue;
 
-public class Solution {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Stack;
 
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-//        System.out.println(new RecentCounter().ping(
-//                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
-//        ));
-//        System.out.println(inorderTraversal(
-//                "(()})"
-//        ));
-//        System.out.println(minNumber(
-//                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
-//        ));
-//        System.out.println(countStudents(
-//                new int[]{1,1,1,0,0,1}, new int[]{1,0,0,0,1,1}
-//        ));
-//        System.out.println(timeRequiredToBuy(
-//                new int[]{5,1,1,1}, 0
-//        ));
-//        System.out.println(captureForts(
-//                new int[]{-1,-1,0,1,0,0,1,-1,1,0}
-//        ));
-    }
-
+public class Stack145_BinaryTreePostorderTraversal {
     /*
         이진 트리의 root가 주어질 때, 해당 노드들의 값을 후위 순회한 결과를 반환하세요.
         후위 순회
@@ -107,5 +81,4 @@ public class Solution {
             this.right = right;
         }
     }
-
 }
