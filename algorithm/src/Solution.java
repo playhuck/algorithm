@@ -15,9 +15,9 @@ public class Solution {
 //        System.out.println(new RecentCounter().ping(
 //                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
 //        ));
-//        System.out.println(inorderTraversal(
-//                "(()})"
-//        ));
+        System.out.println(simplifyPath(
+                "/home/user/Documents/../Pictures"
+        ));
 //        System.out.println(minNumber(
 //                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
 //        ));
@@ -33,64 +33,40 @@ public class Solution {
     }
 
     /*
-        n진 트리의 root가 주어질 때, 해당 노드들의 값을 후위 순회한 결과를 반환하세요.
-        N진 트리의 입력 직렬화는 레벨 순서 순회로 표현됩니다. 각 자식 그룹은 null 값으로 구분됩니다 (예시 참조)
+        Unix 스타일 파일 시스템을 위한 절대 경로가 주어지며, 이는 항상 슬래시 '/'로 시작합니다.
+        이 절대 경로를 단순화된 정규 경로로 변환하는 것이 당신의 과제입니다.
+        Unix 스타일 파일 시스템의 규칙은 다음과 같습니다:
+
+        단일 마침표 '.'는 현재 디렉토리를 나타냅니다.
+        이중 마침표 '..'는 이전/상위 디렉토리를 나타냅니다.
+        '//'와 '///'같은 연속된 여러 개의 슬래시는 단일 슬래시 '/'로 취급됩니다.
+        위의 규칙과 일치하지 않는 마침표들의 시퀀스는 유효한 디렉토리 또는 파일 이름으로 취급되어야 합니다.
+        예를 들어, '...'와 '....'는 유효한 디렉토리나 파일 이름입니다.
+
+        단순화된 정규 경로는 다음 규칙을 따라야 합니다:
+
+        경로는 반드시 하나의 슬래시 '/'로 시작해야 합니다.
+        경로 내의 디렉토리들은 정확히 하나의 슬래시 '/'로 구분되어야 합니다.
+        루트 디렉토리가 아닌 경우, 경로는 슬래시 '/'로 끝나서는 안 됩니다.
+        경로에는 현재 또는 상위 디렉토리를 나타내는 단일 또는 이중 마침표('.'와 '..')가 사용되어서는 안 됩니다.
+
+        단순화된 정규 경로를 반환하세요.
      */
-    public List<Integer> postorder(Node root) {
+    static public String simplifyPath(String path) {
 
-        List<Integer> postOrder = new ArrayList<>();
-        Stack<Node> stack = new Stack<>();
+        String[] strings = path.split("/");
 
-        if(Objects.isNull(root)){
-            return postOrder;
-        }
+        for (int i = 0; i < strings.length - 1; i++) {
 
-        if(Objects.isNull(root.children)){
-            postOrder.add(root.val);
-            return postOrder;
-        }
+            if(strings[i].equals("..")) {
 
-        Node cur = root;
+                for(int j = i; j > 0; j--) {
 
-        while (!root.children.isEmpty()) {
-
-            if (!cur.children.isEmpty()) {
-                stack.push(cur);
-                cur = cur.children.get(0);
-            } else {
-
-                if(cur.val != Integer.MIN_VALUE){
-                    postOrder.add(cur.val);
-                }
-
-                if(!stack.isEmpty()){
-                    cur = stack.pop();
-                    if(!cur.children.isEmpty()){
-                        cur.children.remove(0);
-                    }
                 }
             }
         }
 
-        postOrder.add(root.val);
-
-        return postOrder;
-    }
-
-    class Node {
-        public int val;
-        public List<Node> children;
-
-        public Node() {}
-
-        public Node(int _val) {
-            val = _val;
-        }
-
-        public Node(int _val, List<Node> _children) {
-            val = _val;
-            children = _children;
-        }
+        return String.join("/", strings);
     }
 
 }
