@@ -1,3 +1,6 @@
+import com.sun.source.tree.Tree;
+import stack_queue.Stack144_BinaryTreePreorderTraversal;
+
 import javax.swing.tree.TreeNode;
 import java.math.BigInteger;
 import java.util.*;
@@ -15,9 +18,9 @@ public class Solution {
 //        System.out.println(new RecentCounter().ping(
 //                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
 //        ));
-        System.out.println(simplifyPath(
-                "/home/user/Documents/../Pictures"
-        ));
+//        System.out.println(simplifyPath(
+//                "/home/../../.."
+//        ));
 //        System.out.println(minNumber(
 //                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
 //        ));
@@ -33,40 +36,73 @@ public class Solution {
     }
 
     /*
-        Unix 스타일 파일 시스템을 위한 절대 경로가 주어지며, 이는 항상 슬래시 '/'로 시작합니다.
-        이 절대 경로를 단순화된 정규 경로로 변환하는 것이 당신의 과제입니다.
-        Unix 스타일 파일 시스템의 규칙은 다음과 같습니다:
+        단일 연결 리스트의 head가 주어집니다. 리스트는 다음과 같이 표현될 수 있습니다:
+        L0 → L1 → … → Ln - 1 → Ln
+        리스트를 다음과 같은 형태로 재정렬하세요:
+        L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+        리스트의 노드에 있는 값들을 수정해서는 안 됩니다. 노드 자체만 변경할 수 있습니다.
 
-        단일 마침표 '.'는 현재 디렉토리를 나타냅니다.
-        이중 마침표 '..'는 이전/상위 디렉토리를 나타냅니다.
-        '//'와 '///'같은 연속된 여러 개의 슬래시는 단일 슬래시 '/'로 취급됩니다.
-        위의 규칙과 일치하지 않는 마침표들의 시퀀스는 유효한 디렉토리 또는 파일 이름으로 취급되어야 합니다.
-        예를 들어, '...'와 '....'는 유효한 디렉토리나 파일 이름입니다.
-
-        단순화된 정규 경로는 다음 규칙을 따라야 합니다:
-
-        경로는 반드시 하나의 슬래시 '/'로 시작해야 합니다.
-        경로 내의 디렉토리들은 정확히 하나의 슬래시 '/'로 구분되어야 합니다.
-        루트 디렉토리가 아닌 경우, 경로는 슬래시 '/'로 끝나서는 안 됩니다.
-        경로에는 현재 또는 상위 디렉토리를 나타내는 단일 또는 이중 마침표('.'와 '..')가 사용되어서는 안 됩니다.
-
-        단순화된 정규 경로를 반환하세요.
+        [1,2,3,4] -> [1,4,2,3]
+        [1,2,3,4,5] -> [1,5,2,4,3]
      */
-    static public String simplifyPath(String path) {
 
-        String[] strings = path.split("/");
+    public void reorderList(ListNode head) {
 
-        for (int i = 0; i < strings.length - 1; i++) {
+        Deque<ListNode> deque = new ArrayDeque<>();
 
-            if(strings[i].equals("..")) {
+        if(Objects.isNull(head)){
+            return;
+        }
 
-                for(int j = i; j > 0; j--) {
+        if(Objects.isNull(head.next)){
+            return;
+        }
 
-                }
+        for(ListNode cur = head; cur != null; cur = cur.next){
+            if(Objects.equals(cur, head)){
+                continue;
+            }
+            deque.push(cur);
+        }
+
+        ListNode cur = head;
+
+        boolean pop = true;
+
+        while (cur != null) {
+
+            if(deque.isEmpty()){
+                break;
+            }
+
+            if(pop) {
+                cur.next = deque.pop();
+                cur = cur.next;
+                pop = false;
+            } else {
+                cur.next = deque.poll();
+                cur = cur.next;
+                pop = true;
             }
         }
 
-        return String.join("/", strings);
+    }
+
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 
 }
