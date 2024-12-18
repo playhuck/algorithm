@@ -30,79 +30,29 @@ public class Solution {
 //        System.out.println(timeRequiredToBuy(
 //                new int[]{5,1,1,1}, 0
 //        ));
-//        System.out.println(captureForts(
-//                new int[]{-1,-1,0,1,0,0,1,-1,1,0}
-//        ));
+        System.out.println(Arrays.toString(findRelativeRanks(
+                new int[]{10,3,8,9,4}
+        )));
     }
 
     /*
-        단일 연결 리스트의 head가 주어집니다. 리스트는 다음과 같이 표현될 수 있습니다:
-        L0 → L1 → … → Ln - 1 → Ln
-        리스트를 다음과 같은 형태로 재정렬하세요:
-        L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
-        리스트의 노드에 있는 값들을 수정해서는 안 됩니다. 노드 자체만 변경할 수 있습니다.
+        크기가 n인 정수 배열 score가 주어지며, score[i]는 대회에서 i번째 선수의 점수입니다.
+        모든 점수는 고유함이 보장됩니다.
+        선수들은 그들의 점수를 기반으로 순위가 매겨지며,
+        1등 선수는 가장 높은 점수를, 2등 선수는 2번째로 높은 점수를 가지는 식입니다.
+        각 선수의 순위는 다음과 같이 결정됩니다:
 
-        [1,2,3,4] -> [1,4,2,3]
-        [1,2,3,4,5] -> [1,5,2,4,3]
+        1등 선수의 순위는 "Gold Medal"입니다.
+        2등 선수의 순위는 "Silver Medal"입니다.
+        3등 선수의 순위는 "Bronze Medal"입니다.
+        4등부터 n등까지의 선수들의 순위는 그들의 등수 숫자입니다 (즉, x등 선수의 순위는 "x"입니다).
+
+        크기가 n인 배열 answer를 반환하세요. 여기서 answer[i]는 i번째 선수의 순위입니다.
      */
 
-    public void reorderList(ListNode head) {
+    public static String[] findRelativeRanks(int[] score) {
 
-        Deque<ListNode> deque = new ArrayDeque<>();
-
-        if(Objects.isNull(head)){
-            return;
-        }
-
-        if(Objects.isNull(head.next)){
-            return;
-        }
-
-        for(ListNode cur = head; cur != null; cur = cur.next){
-            if(Objects.equals(cur, head)){
-                continue;
-            }
-            deque.push(cur);
-        }
-
-        ListNode cur = head;
-
-        boolean pop = true;
-
-        while (cur != null) {
-
-            if(deque.isEmpty()){
-                break;
-            }
-
-            if(pop) {
-                cur.next = deque.pop();
-                cur = cur.next;
-                pop = false;
-            } else {
-                cur.next = deque.poll();
-                cur = cur.next;
-                pop = true;
-            }
-        }
-
-    }
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
+        return new String[0];
     }
 
 }
