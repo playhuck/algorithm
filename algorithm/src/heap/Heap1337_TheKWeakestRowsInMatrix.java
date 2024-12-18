@@ -1,40 +1,9 @@
-import com.sun.source.tree.Tree;
-import stack_queue.Stack144_BinaryTreePreorderTraversal;
+package heap;
 
-import javax.swing.tree.TreeNode;
-import java.math.BigInteger;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.PriorityQueue;
 
-public class Solution {
-
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-//        System.out.println(new RecentCounter().ping(
-//                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
-//        ));
-//        System.out.println(simplifyPath(
-//                "/home/../../.."
-//        ));
-//        System.out.println(minNumber(
-//                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
-//        ));
-//        System.out.println(countStudents(
-//                new int[]{1,1,1,0,0,1}, new int[]{1,0,0,0,1,1}
-//        ));
-//        System.out.println(timeRequiredToBuy(
-//                new int[]{5,1,1,1}, 0
-//        ));
-        System.out.println(Arrays.toString(findRelativeRanks(
-                new int[]{10,3,8,9,4}
-        )));
-    }
-
+public class Heap1337_TheKWeakestRowsInMatrix {
     /*
         m x n 크기의 이진 행렬 mat가 주어지며,
         이는 1(군인을 나타냄)과 0(시민을 나타냄)으로 구성되어 있습니다.
@@ -54,8 +23,7 @@ public class Solution {
         k = 3
         Output: [2,0,3]
      */
-
-    public static int[] kWeakestRows(int[][] mat, int k) {
+    int[] kWeakestRows(int[][] mat, int k) {
 
         PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> {
             if(a[1] == b[1]) {
@@ -91,5 +59,4 @@ public class Solution {
         return res;
 
     }
-
 }
