@@ -1,32 +1,8 @@
+package heap;
+
 import java.util.*;
 
-public class Solution_Company {
-
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-//        System.out.println(new RecentCounter().ping(
-//                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
-//        ));
-//        System.out.println(simplifyPath(
-//                "/home/../../.."
-//        ));
-//        System.out.println(minNumber(
-//                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
-//        ));
-//        System.out.println(countStudents(
-//                new int[]{1,1,1,0,0,1}, new int[]{1,0,0,0,1,1}
-//        ));
-//        System.out.println(timeRequiredToBuy(
-//                new int[]{5,1,1,1}, 0
-//        ));
-        System.out.println(lastStoneWeight(
-                new int[]{2,7,4,1,8,1}
-        ));
-    }
-
+public class Heap1046_LastStoneWeight {
     /*
         정수 배열 stones가 주어지며, stones[i]는 i번째 돌의 무게입니다.
         우리는 돌들로 게임을 하고 있습니다. 각 턴마다, 우리는 가장 무거운 두 돌을 선택하여 서로 부딪힙니다.
@@ -41,6 +17,47 @@ public class Solution_Company {
 
 
     public static int lastStoneWeight(int[] stones) {
+
+        Integer[] integers = Arrays.stream(stones).boxed().toArray(Integer[]::new);
+
+        Arrays.sort(integers, Collections.reverseOrder());
+
+        if (stones.length == 1) {
+            return stones[0];
+        }
+
+        if (integers.length <= 2) {
+            if (Objects.equals(integers[0], integers[1])) {
+                return 0;
+            } else {
+                return integers[0] - integers[1];
+            }
+        }
+
+        List<Integer> stonesList = new ArrayList<>(Arrays.stream(integers).toList());
+
+        while (stonesList.size() >= 2) {
+
+            final int y = stonesList.get(0);
+            final int x = stonesList.get(1);
+
+            if(y == x) {
+                stonesList.remove(0);
+                stonesList.remove(0);
+            } else {
+                stonesList.remove(0);
+                stonesList.remove(0);
+                stonesList.add(y - x);
+            }
+
+            stonesList.sort(Collections.reverseOrder());
+
+        }
+
+        return !stonesList.isEmpty() ? stonesList.get(0) : 0;
+    }
+
+    int lastStoneWeight2(int[] stones) {
 
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
         for (int stone : stones) {
