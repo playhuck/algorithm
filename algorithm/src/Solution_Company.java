@@ -22,46 +22,159 @@ public class Solution_Company {
 //        System.out.println(timeRequiredToBuy(
 //                new int[]{5,1,1,1}, 0
 //        ));
-        System.out.println(lastStoneWeight(
-                new int[]{2,7,4,1,8,1}
-        ));
+//        System.out.println(Arrays.toString(maxSubsequence(
+//                new int[]{0,0,3,3}, 2
+//        )));
+//        System.out.println(findDiagonalOrder(
+//                new int[]{{1,2,3},{4,5,6},{7,8,9}}
+//        ));
+        List<List<Integer>> numsList = Arrays.asList(
+                Arrays.asList(1,2,3,4,5),
+                Arrays.asList(6,7),
+                List.of(8),
+                Arrays.asList(9,10,11),
+                Arrays.asList(12,13,14,15,16)
+        );
+        System.out.println(Arrays.toString(findDiagonalOrder(numsList)));
     }
 
     /*
-        정수 배열 stones가 주어지며, stones[i]는 i번째 돌의 무게입니다.
-        우리는 돌들로 게임을 하고 있습니다. 각 턴마다, 우리는 가장 무거운 두 돌을 선택하여 서로 부딪힙니다.
-        가장 무거운 두 돌의 무게가 x와 y이고 x <= y라고 가정합니다. 이 충돌의 결과는 다음과 같습니다:
+        2차원 정수 배열 nums가 주어질 때,
+        아래 이미지에 보이는 것처럼 nums의 모든 원소를 대각선 순서로 반환하세요.
 
-        만약 x == y이면, 두 돌 모두 파괴되고,
-        만약 x != y이면, 무게가 x인 돌은 파괴되고, 무게가 y인 돌은 새로운 무게 y - x를 갖게 됩니다.
+        Input: nums = [[1,2,3],[4,5,6],[7,8,9]]
+        Output: [1,4,2,7,5,3,8,6,9]
 
-        게임이 끝날 때, 최대 하나의 돌만 남습니다.
-        마지막으로 남은 돌의 무게를 반환하세요. 만약 남은 돌이 없다면, 0을 반환하세요.
+        [0,0]
+
+        //
+
+        [1,0] +1
+        [0,1] -1 +1
+
+        //
+
+        [2,0] +2
+        [1,1] -1 +2
+        [0,2] -2 +2
+
+        //
+
+        [3,0] +3
+        [2,1] -1 +1
+        [1,2] -2 +2
+        [0,3] -3 +4
+
+        //
+
+        [4,0]
+        [3,1]
+        [2,2]
+        [1,3]
+        [0,4]
+        ...
+
+        [4,1]
+        [3,2]
+        [2,3]
+        [1,4]
+
+        [4,2]
+        [3,3]
+        [2,4]
+
+        ..
+
+        //
+
+        직사각형이니
+        row => 제일 큰 배열의 크기
+        column => 제일 큰 배열의 제일 큰 크기만큼
+        [max, max]가 될 때 까지
      */
 
+    public static int[] findDiagonalOrder(List<List<Integer>> nums) {
 
-    public static int lastStoneWeight(int[] stones) {
+        PriorityQueue<Integer> queue = new PriorityQueue<>(Collections.reverseOrder());;
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-        for (int stone : stones) {
-            pq.add(stone);
+        int max = Integer.MIN_VALUE;
+        int length = 0;
+
+        for (List<Integer> num : nums) {
+
+            if(num.size() > max) {
+                max = num.size();
+            }
+            length += num.size();
+
         }
 
-        while (pq.size() > 1) {
+        int[] res = new int[length];
 
-            int y = pq.poll();
-            int x = pq.poll();
-            int n = Math.abs(x - y);
+        int row = 0;
+        int currRow = 0;
+        int currCol = 0;
 
-            if(x == y) {
-                continue;
+        int index = 0;
+        int lastIndex = 2;
+
+        boolean rowStream = true;
+
+        while (currRow != max -1 || currCol != max - 1) {
+
+            if(rowStream) {
+
+                if(currRow == 4 && currCol == 0) {
+                    System.out.println("Hello");
+                    System.out.println(res.length);
+                    nums.get(currRow).get(currCol);
+                }
+
+                if (currRow < max - 1 && currCol < nums.get(currRow).size() - 1) {
+                    res[index] = nums.get(currRow).get(currCol);
+                    index++;
+                }
+
+                if(currRow == 0) {
+
+                    if(currCol == max - 1){
+                        currRow = max - 1;
+                        currCol = 1;
+                        rowStream = false;
+                        continue;
+                    }
+
+                    row ++;
+
+                    currRow = row;
+                    currCol = 0;
+                } else {
+                    currRow = currRow - 1;
+                    currCol = currCol + 1;
+                }
+
             } else {
 
-                pq.add(n);
+                System.out.println(currRow + " " + currCol + "h");
+
+                if (currRow < max - 1 && currCol < nums.get(currRow).size() - 1) {
+                    res[index] = nums.get(currRow).get(currCol);
+                    index++;
+                }
+
+                if(currCol == max - 1) {
+                    currRow = max - 1;
+                    currCol = lastIndex;
+
+                    lastIndex ++;
+                } else {
+                    currRow = currRow - 1;
+                    currCol = currCol + 1;
+                }
             }
         }
 
-        return pq.isEmpty() ? 0 : pq.peek();
+        return res;
     }
 
 }

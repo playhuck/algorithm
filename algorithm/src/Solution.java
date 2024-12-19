@@ -30,9 +30,9 @@ public class Solution {
 //        System.out.println(timeRequiredToBuy(
 //                new int[]{5,1,1,1}, 0
 //        ));
-        System.out.println(Arrays.toString(findRelativeRanks(
-                new int[]{10,3,8,9,4}
-        )));
+//        System.out.println(kWeakestRows(
+//                new int[]{10,3,8,9,4}
+//        ));
     }
 
     /*
