@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class Heap1942_TheNumberOfTheSmallestUnoccupiedChair {
+public class RE_Heap1942_TheNumberOfTheSmallestUnoccupiedChair {
     /*
         0부터 n - 1까지 번호가 매겨진 n명의 친구들이 참석하는 파티가 있습니다.
         이 파티에는 0부터 무한대까지 번호가 매겨진 무한한 수의 의자가 있습니다.
