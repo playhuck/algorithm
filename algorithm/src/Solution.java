@@ -30,22 +30,28 @@ public class Solution {
 //        System.out.println(timeRequiredToBuy(
 //                new int[]{5,1,1,1}, 0
 //        ));
-//        System.out.println(kWeakestRows(
-//                new int[]{10,3,8,9,4}
-//        ));
+        System.out.println(maxProductDifference(
+                new int[]{2,9,5,9,1}
+        ));
     }
 
     /*
-        정수 배열 nums와 정수 limit가 주어질 때,
-        이 하위 배열의 모든 두 원소 간의 절대 차이가 limit 이하인 가장 긴 비어있지 않은 하위 배열의 크기를 반환하세요.
-         [8,2,4,7], limit = 4
+        곱의 차이는 두 쌍 (a, b)와 (c, d) 사이에서 (a * b) - (c * d)로 정의됩니다.
+
+        예를 들어, (5, 6)과 (2, 7) 사이의 곱의 차이는 (5 * 6) - (2 * 7) = 16입니다.
+
+        정수 배열 nums가 주어질 때, 쌍 (nums[w], nums[x])와 (nums[y], nums[z])
+        사이의 곱의 차이가 최대가 되도록 하는 네 개의 서로 다른 인덱스 w, x, y, z를 선택하세요.
+        최대 곱의 차이를 반환하세요.
+
      */
 
-    public static int longestSubarray(int[] nums, int limit) {
+    public static int maxProductDifference(int[] nums) {
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+        Arrays.sort(nums);
 
-        return 1;
+        return (nums[nums.length - 1] * nums[nums.length - 2]) - (nums[0] * nums[1]);
+
     }
 
 }
