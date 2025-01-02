@@ -1,50 +1,10 @@
-import binary_tree.BT104;
-import stack_queue.Stack144_BinaryTreePreorderTraversal;
-import stack_queue.Stack94_BinaryTreeInOrderTraversal;
+package binary_tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Solution_Company {
-
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-//        System.out.println(new RecentCounter().ping(
-//                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
-//        ));
-//        System.out.println(simplifyPath(
-//                "/home/../../.."
-//        ));
-//        System.out.println(minNumber(
-//                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
-//        ));
-//        System.out.println(countStudents(
-//                new int[]{1,1,1,0,0,1}, new int[]{1,0,0,0,1,1}
-//        ));
-//        System.out.println(timeRequiredToBuy(
-//                new int[]{5,1,1,1}, 0
-//        ));
-//        System.out.println(Arrays.toString(maxRowSubsequence(
-//                new int[]{0,0,3,3}, 2
-//        )));
-//        System.out.println(findDiagonalOrder(
-//                new int[]{{1,2,3},{4,5,6},{7,8,9}}
-//        ));
-        List<List<Integer>> numsList = Arrays.asList(
-                Arrays.asList(1, 2, 3),
-                List.of(4),
-                List.of(5, 6, 7),
-                List.of(8),
-                Arrays.asList(9, 10, 11)
-        );
-//        System.out.println((smallestChair(new int[][]{{2, 4}, {4, 9}, {3, 4}, {6, 8}, {5, 10}}, 4)));
-        // {{2,4}, {4,9}, {3,4}, {6,8}, {5,10}}
-        // {{3,10}, {1,5}, {2,6}}
-    }
-
-    /*
+public class RE_BT95 {
+     /*
         n개의 유일한 노드(값이 1부터 n까지)를 가진 구조적으로 유일한 모든 **이진 탐색 트리(BST)**를 반환하세요.
         답은 어떤 순서로든 반환할 수 있습니다.
         [참고: 구조적으로 유일하다는 것은 노드들의 배치 방식이 서로 다른 것을 의미합니다.]
