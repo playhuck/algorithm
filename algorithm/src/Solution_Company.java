@@ -1,4 +1,5 @@
 import binary_tree.BT104;
+import com.sun.source.tree.Tree;
 import stack_queue.Stack144_BinaryTreePreorderTraversal;
 import stack_queue.Stack94_BinaryTreeInOrderTraversal;
 
@@ -45,31 +46,16 @@ public class Solution_Company {
     }
 
     /*
-        이진 트리의 root가 주어질 때, 유효한 이진 탐색 트리(BST)인지 판단하세요.
-        유효한 BST는 다음과 같이 정의됩니다:
-
-        노드의 왼쪽 서브트리는 해당 노드의 키보다 작은 키를 가진 노드들만 포함합니다.
-        노드의 오른쪽 서브트리는 해당 노드의 키보다 큰 키를 가진 노드들만 포함합니다.
-        왼쪽과 오른쪽 서브트리 모두 이진 탐색 트리여야 합니다.
+        m x n 크기의 문자 격자 board와 문자열 word가 주어질 때,
+        word가 격자에 존재한다면 true를 반환하세요.
+        단어는 인접한 셀들의 문자들로 구성될 수 있으며, 인접한 셀은 가로나 세로로 이웃한 것을 의미합니다.
+        같은 문자 셀은 한 번 이상 사용할 수 없습니다.
      */
 
-    public boolean isValidBST(TreeNode root) {
+    public boolean exist(char[][] board, String word) {
 
-        if(root == null) return true;
+        return false;
 
-        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
-
-    }
-
-    private boolean isValidBST(TreeNode node, long min, long max) {
-        if (node == null) return true;
-
-        if (node.val <= min || node.val >= max) {
-            return false;
-        }
-
-        return isValidBST(node.left, min, node.val) &&
-                isValidBST(node.right, node.val, max);
     }
 
     public class TreeNode {
