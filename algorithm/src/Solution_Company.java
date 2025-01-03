@@ -45,50 +45,31 @@ public class Solution_Company {
     }
 
     /*
-        n개의 유일한 노드(값이 1부터 n까지)를 가진 구조적으로 유일한 모든 **이진 탐색 트리(BST)**를 반환하세요.
-        답은 어떤 순서로든 반환할 수 있습니다.
-        [참고: 구조적으로 유일하다는 것은 노드들의 배치 방식이 서로 다른 것을 의미합니다.]
+        이진 트리의 root가 주어질 때, 유효한 이진 탐색 트리(BST)인지 판단하세요.
+        유효한 BST는 다음과 같이 정의됩니다:
 
-        1~n까지의 숫자에서 각 숫자를 루트노드로 삼고 재귀호출
-        현재 값보다 큰 값이 있다면 오른쪽 시작값, 종료 값 root + 1 ~ n
-        현재 값보다 작은 값이 있다면 왼쪽 시작값 1 ~ root - 1
+        노드의 왼쪽 서브트리는 해당 노드의 키보다 작은 키를 가진 노드들만 포함합니다.
+        노드의 오른쪽 서브트리는 해당 노드의 키보다 큰 키를 가진 노드들만 포함합니다.
+        왼쪽과 오른쪽 서브트리 모두 이진 탐색 트리여야 합니다.
      */
 
-    public List<TreeNode> generateTrees(int n) {
+    public boolean isValidBST(TreeNode root) {
 
-        if (n == 0) return new ArrayList<>();
+        if(root == null) return true;
 
-        return generate(1, n);
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
 
     }
 
-    private List<TreeNode> generate(int start, int end) {
-        List<TreeNode> result = new ArrayList<>();
+    private boolean isValidBST(TreeNode node, long min, long max) {
+        if (node == null) return true;
 
-        // 베이스 케이스: 범위가 유효하지 않을 때
-        if (start > end) {
-            result.add(null);  // null도 하나의 유효한 서브트리
-            return result;
+        if (node.val <= min || node.val >= max) {
+            return false;
         }
 
-        for (int i = start; i <= end; i++) {
-            // i를 루트로 하는 트리를 만들 예정
-            // 여기에 로직 추가
-            List<TreeNode> leftSubtrees = generate(start, i-1);
-            List<TreeNode> rightSubtrees = generate(i+1, end);
-
-            for (TreeNode left : leftSubtrees) {
-                for (TreeNode right : rightSubtrees) {
-                    TreeNode root = new TreeNode(i);  // 현재 i를 루트로 하는 새 노드
-                    root.left = left;                 // 왼쪽 서브트리 연결
-                    root.right = right;               // 오른쪽 서브트리 연결
-                    result.add(root);                 // 만들어진 트리를 결과 목록에 추가
-                }
-            }
-        }
-
-        // 여기에 로직을 추가할 예정
-        return result;
+        return isValidBST(node.left, min, node.val) &&
+                isValidBST(node.right, node.val, max);
     }
 
     public class TreeNode {
