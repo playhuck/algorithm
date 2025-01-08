@@ -1,6 +1,4 @@
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Solution_Company {
 
@@ -31,82 +29,70 @@ public class Solution_Company {
 //                new int[]{{1,2,3},{4,5,6},{7,8,9}}
 //        ));
         List<List<Integer>> numsList = Arrays.asList(
-                Arrays.asList(1, 2, 3),
+                Arrays.asList(1,2,3),
                 List.of(4),
-                List.of(5, 6, 7),
+                List.of(5,6,7),
                 List.of(8),
-                Arrays.asList(9, 10, 11)
+                Arrays.asList(9,10,11)
         );
-//        merge(new int[]{2,0}, 1, new int[]{1}, 1);
-        System.out.println(maxArea(new int[]{8,7,2,1}));
+        System.out.println((smallestChair(new int[][]{{2,4}, {4,9}, {3,4}, {6,8}, {5,10}}, 4)));
         // {{2,4}, {4,9}, {3,4}, {6,8}, {5,10}}
         // {{3,10}, {1,5}, {2,6}}
     }
 
     /*
-        길이가 n인 정수 배열 height가 주어집니다.
-        n개의 수직선이 그려져 있으며, i번째 선의 두 끝점은 (i, 0)과 (i, height[i])입니다.
-        x축과 함께 용기를 형성하는 두 선을 찾되, 이 용기가 가장 많은 물을 담을 수 있어야 합니다.
-        용기가 담을 수 있는 최대 물의 양을 반환하세요.
-        주의 용기를 기울일 수 없습니다.
+        0부터 n - 1까지 번호가 매겨진 n명의 친구들이 참석하는 파티가 있습니다.
+        이 파티에는 0부터 무한대까지 번호가 매겨진 무한한 수의 의자가 있습니다.
+        친구가 파티에 도착하면, 그들은 비어있는 의자 중 가장 작은 번호의 의자에 앉습니다.
 
-        Input: height = [1,8,6,2,5,4,8,3,7]
-        Output: 49
+        예를 들어, 한 친구가 도착했을 때 의자 0, 1, 5가 이미 점유되어 있다면, 그 친구는 2번 의자에 앉을 것입니다.
 
+        친구가 파티를 떠날 때, 그들의 의자는 떠나는 순간에 비어있게 됩니다.
+        만약 다른 친구가 같은 순간에 도착한다면, 그들은 그 의자에 앉을 수 있습니다.
+        0부터 시작하는 2차원 정수 배열 times가 주어지며, times[i] = [arrivali, leavingi]는 각각 i번째 친구의 도착 시간과 떠나는 시간을 나타냅니다.
+        또한 정수 targetFriend가 주어집니다. 모든 도착 시간은 서로 다릅니다.
+        targetFriend 번호를 가진 친구가 앉게 될 의자 번호를 반환하세요.
      */
 
-    public static int maxArea(int[] height) {
+    public static int smallestChair(int[][] times, int targetFriend) {
 
-        int p2 = height.length - 1;
-
-        int maxFloor = 0;
-        for (int i = 1; i < (double) (height.length / 2); i++) {
-
-            if(height[maxFloor] < height[i]) {
-                maxFloor = i;
-            }
+        if(times.length == 0) {
+            return 0;
         }
 
-        int maxSide = Integer.MIN_VALUE;
+        PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
 
-        for (int i = p2; i > maxFloor; i--) {
+        int[] target = times[targetFriend];
 
-            int h = height[i];
-            if(maxSide == Integer.MIN_VALUE) {
-                maxSide = i;
-                continue;
-            }
+        for (int[] time : times) {
 
-            int min = Math.min(h, height[maxFloor]);
-            int min2 = Math.min(height[maxSide], height[maxFloor]);
+            queue.add(new int[]{time[0], time[1]});
 
-            int area1 = min * (height.length - maxFloor);
-            int area2 = min2 * (height.length - maxFloor);
+        }
+        int visitChair = Integer.MIN_VALUE;
 
-            if(area1 > area2) {
-                maxSide = i;
-            }
+        /*
+            small 리스트를 map에 저장하고,추가할 때마다 small리스트 자리를 채우면 되지 않을까?
+            가장 작은 small 자리를 기억해 뒀다가 종료시간이 더 크거나 같은 값이 나오면 small을 채우고 map을 탐색하면서
+            다시 제일 작은 small
+         */
+
+        Map<Integer, Integer> timeMap = new HashMap<>();
+
+        int[] minPoll = queue.poll();
+        int[] min = new int[]{minPoll[0], minPoll[1]};
+        int sequence = 0;
+
+        while (!queue.isEmpty()) {
+
+            int[] poll = queue.poll();
+
+            if(poll[1] > min[1] && poll[1] == min[1]) {}
 
 
         }
 
-//        int max = Integer.MIN_VALUE;
-//
-//        while (p2 > 0) {
-//
-//            for (int i = maxFloor; i < p2; i++) {
-//
-//                int h = height[i];
-//
-//                int min = Math.min(h, height[p2]);
-//
-//                max = Math.max(max, min * (p2 - i));
-//
-//            }
-//
-//            p2 --;
-//        }
+        return visitChair;
 
-        return height[maxFloor] * maxSide;
     }
 }
