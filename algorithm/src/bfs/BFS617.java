@@ -1,44 +1,8 @@
-import com.sun.source.tree.Tree;
-import stack_queue.Stack144_BinaryTreePreorderTraversal;
+package bfs;
 
-import javax.swing.tree.TreeNode;
-import java.math.BigInteger;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
-public class Solution {
-
-    public static void main(String[] args) {
-
-//        System.out.println(countGoodRectangles(
-//                new int[][]{{5,8},{3,9},{5,12},{16,5}}
-//        ));
-//        System.out.println(new RecentCounter().ping(
-//                new String[]{"RecentCounter", "ping", "ping", "ping", "ping"}
-//        ));
-//        System.out.println(simplifyPath(
-//                "/home/../../.."
-//        ));
-//        System.out.println(minNumber(
-//                new String[]{"hello","world","leetcode"}, "welldonehoneyr"
-//        ));
-//        System.out.println(countStudents(
-//                new int[]{1,1,1,0,0,1}, new int[]{1,0,0,0,1,1}
-//        ));
-//        System.out.println(timeRequiredToBuy(
-//                new int[]{5,1,1,1}, 0
-//        ));
-        System.out.println(splitPainting(
-                new int[][]{
-                        {1, 4, 5},
-                        {4, 7, 7},
-                        {1, 7, 9}
-                }
-        ));
-    }
-
+public class BFS617 {
     /*
         두 개의 이진 트리 root1과 root2가 주어집니다.
         하나의 트리를 다른 트리 위에 올려놓는다고 상상해보면, 두 트리의 일부 노드들은 겹치고 일부는 겹치지 않습니다.
@@ -114,5 +78,4 @@ public class Solution {
             this.right = right;
         }
     }
-
 }
