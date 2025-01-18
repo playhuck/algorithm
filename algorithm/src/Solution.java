@@ -40,49 +40,45 @@ public class Solution {
     }
 
     /*
-        이진 트리의 root가 주어질 때, 각 레벨에 있는 노드들의 평균값을 배열 형태로 반환하세요.
-        실제 답과 10-5 이내의 오차가 있는 답은 허용됩니다.
+        이진 탐색 트리의 root와 정수 k가 주어질 때,
+        BST 안에 두 원소의 합이 k와 같은 경우가 있으면 true를, 그렇지 않으면 false를 반환하세요.
      */
 
-    public List<Double> averageOfLevels(TreeNode root) {
+    public boolean findTarget(TreeNode root, int k) {
 
-        HashMap<Integer, Long> levelSumMap = new LinkedHashMap<>();
-        HashMap<Integer, Integer> levelSumCountMap = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
 
-        recursion(root, 1, levelSumMap, levelSumCountMap);
+        recursion(root, list);
 
-        List<Double> averageList = new ArrayList<>();
+        boolean isFindTarget = false;
 
-        for(Map.Entry<Integer, Long> entry : levelSumMap.entrySet()) {
 
-            int level = entry.getKey();
-            long sum = entry.getValue();
-            int sumCount = levelSumCountMap.get(level);
+        for (int i = 0; i < list.size(); i++) {
 
-            averageList.add((double) sum / sumCount);
+            int cur = list.get(i);
+            for (int j = i + 1; j < list.size(); j++) {
+
+                int next = list.get(j);
+                if ((cur + next) == k) {
+                    return true;
+                }
+            }
         }
 
-        return averageList;
-    }
-
-    public void recursion(
-            TreeNode node,
-            Integer level,
-            Map<Integer, Long> levelSumMap,
-            Map<Integer, Integer> levelSumCountMap
-    ) {
-
-        if (node == null) {
-            return;
-        }
-
-        levelSumMap.put(level, levelSumMap.getOrDefault(level, 0L) + node.val);
-        levelSumCountMap.put(level, levelSumCountMap.getOrDefault(level, 0) + 1);
-
-        recursion(node.left, level + 1, levelSumMap, levelSumCountMap);
-        recursion(node.right, level + 1, levelSumMap, levelSumCountMap);
+        return isFindTarget;
 
     }
+
+    public void recursion(TreeNode node, List<Integer> list) {
+        if (node == null) return;
+
+        list.add(node.val);
+
+        recursion(node.left, list);
+        recursion(node.right, list);
+
+    }
+
 
     public class TreeNode {
         int val;
