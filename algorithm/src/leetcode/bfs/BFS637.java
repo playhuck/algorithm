@@ -1,4 +1,4 @@
-package bfs;
+package leetcode.bfs;
 
 import java.util.*;
 

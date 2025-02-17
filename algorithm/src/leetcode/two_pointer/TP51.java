@@ -1,5 +1,6 @@
 package leetcode.two_pointer;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,34 @@ public class TP51 {
                         }
                     }
                 }
+            }
+        }
+
+        return result;
+    }
+
+    public int maxOperations2(int[] nums, int k) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        int left = 0;
+        int right = len - 1;
+        int result = 0;
+
+        while(left < right) {
+
+            int sum = nums[left] + nums[right];
+
+            if(sum == k) {
+                result ++;
+
+                left ++;
+                right --;
+            } else if (sum > k) {
+
+                right --;
+            } else {
+
+                left ++;
             }
         }
 
