@@ -1,5 +1,7 @@
 package softeer.lv2;
 
+import leetcode.stack_queue.Stack143_RecorderList;
+
 import java.io.*;
 import java.util.*;
 
@@ -12,6 +14,8 @@ public class YeahButHow {
         String[] splitStr = line.split("");
 
         Stack<String> stack = new Stack<>();
+
+        List<Stack143_RecorderList.ListNode> nodeList = new LinkedList<>();
 
         String result = "";
         String before = "";
