@@ -5,68 +5,34 @@ import java.util.*;
 public class Graph841 {
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
 
-        Map<Integer, Integer> visit = new HashMap<>(); // 이미 방문한 배열
-        PriorityQueue<Integer> que = new PriorityQueue<>((a, b) -> {
-            return a - b;
-        });
+        /*
+            1. 가능한 모든 방을 방문해야한다.
+            2. 열쇠가 없으면 잠긴 방을 들어갈 수 없다.
+            3. 방을 방문하면 방안에 개별 키 세트가 있다.(다른 방으로 갈 수 있는)
+            4. 모든 방을 방문할 수 있다면 true OR false;
+        */
 
-        List<Integer> list = rooms.get(0);
+        boolean[] visit = new boolean[rooms.size()];
+        visit[0] = true;
 
-        int next = 0;
-        boolean isNext = false;
-        int visitCount = 1;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
 
-        while(true) {
+        int count = 1;
 
-            int tmp = next;
+        while( stack.size() > 0) {
+            for(int n : rooms.get(stack.pop())) {
 
-            Collections.sort(list);
-
-            for(Integer n : list) {
-                if(n == 0) continue;
-
-                if(!visit.containsKey(n) && !isNext) {
-                    next = n;
-                    isNext = true;
+                if(!visit[n]) {
+                    stack.push(n);
+                    visit[n] = true;
+                    count ++;
                 }
-                que.add(n);
-            }
-
-            if(tmp == next) {
-
-                while(que.size() > 0) {
-
-                    int q = que.poll();
-                    if(visit.containsKey(q)) {
-                        continue;
-                    } else {
-                        next = q;
-                        break;
-                    }
-                }
-
-                if(tmp == next) {
-                    break;
-                } else {
-                    list = rooms.get(next);
-                    visit.put(next, visit.getOrDefault(next, 0) + 1);
-                    visitCount ++;
-                }
-            } else {
-
-                list = rooms.get(next);
-                visit.put(next, visit.getOrDefault(next, 0) + 1);
-                visitCount ++;
-            }
-
-            isNext = false;
-
-            if(visitCount == rooms.size()) {
-                break;
             }
         }
 
-        return visitCount == rooms.size();
+        return rooms.size() == count;
+
 
     }
 }
