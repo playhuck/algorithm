@@ -22,4 +22,29 @@ public class JumpGame {
 
     }
 
+    public boolean canJump2(int[] nums) {
+
+        int len = nums.length;
+        int max = 0;
+
+        if(len == 1) {
+
+            return true;
+        }
+
+        for(int i = 0; i < len; i ++ ) {
+
+            if(i + nums[i] < max) {
+                return false;
+            }
+
+            max = Math.max(max, i + nums[i]);
+
+            if(max >= len - 1) return false;
+        }
+
+        return true;
+
+    }
+
 }
