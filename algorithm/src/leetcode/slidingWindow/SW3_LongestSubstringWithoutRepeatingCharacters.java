@@ -18,7 +18,6 @@ public class SW3_LongestSubstringWithoutRepeatingCharacters {
         Set<String> set = new HashSet<>();
         String[] strings = s.split("");
 
-        System.out.println(Arrays.toString(strings));
         int max = Integer.MIN_VALUE;
         for(int i = 0; i < s.length(); i++) {
 
