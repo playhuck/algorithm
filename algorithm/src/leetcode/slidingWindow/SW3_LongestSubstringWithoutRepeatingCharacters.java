@@ -1,9 +1,6 @@
 package leetcode.slidingWindow;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SW3_LongestSubstringWithoutRepeatingCharacters {
 
@@ -15,22 +12,25 @@ public class SW3_LongestSubstringWithoutRepeatingCharacters {
 
         if(s.length() == 0) return 0;
 
-        Set<String> set = new HashSet<>();
-        String[] strings = s.split("");
-
-        int max = Integer.MIN_VALUE;
-        for(int i = 0; i < s.length(); i++) {
-
-            String cur = strings[i];
-
-            System.out.println(set.contains(" "));
-            if(set.contains(cur)) {
-                max = Math.max(max, set.size());
-                set.clear();
-                set.add(cur);
-            } else {
-                set.add(cur);
-            };
+        Set<Character> set = new HashSet<>();
+        int max = 0;
+        int left = 0;
+        
+        for(int right = 0; right < s.length(); right++) {
+            
+            char cur = s.charAt(right);
+            
+            // 중복 문자가 있으면 윈도우 축소
+            while(set.contains(cur)) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+            
+            // 현재 문자 추가
+            set.add(cur);
+            
+            // 현재 윈도우 길이로 최대값 갱신
+            max = Math.max(max, right - left + 1);
         }
 
         return max;
