@@ -17,10 +17,15 @@ public class Matrix48_RotateImage {
 
             for(int y = 0; y < matrix.length; y++){
 
+                if(visited[x][y]) continue;
+
                 int rotate1 = matrix[x][y];
-                // 0,0 -> 0,2 / 0,1 -> 1,2 / 0,2 -> 2,2
-                // 0,1,2 / 2,2,2 -> [len * x
-                // 2,0 -> 0,0 / 2,1 -> 1,0 / 2,2 -> 2,0
+                int rotate2 = matrix[y][len - 1 - x];
+
+                visited[x][y] = true;
+                visited[y][len - 1 - x] = true;
+                matrix[x][y] = rotate2;
+                matrix[y][len - 1 - x] = rotate1;
 
             }
         }
