@@ -15,60 +15,35 @@ public class Interval56_MergeIntervals {
      */
     public int[][] merge(int[][] intervals) {
 
-        List<List<Integer>> list = new ArrayList<>();
-
-        // 인덱스 0번이 작은 순서대로 정렬 => 이제 순서보장됐으니 순서대로 탐색하면 됨
-        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
-
-        //배열은 1이상
-        if(intervals.length == 1) {
-            return new int[][]{intervals[0]};
+        if (intervals.length <= 1) {
+            return intervals;
         }
 
-        int len = intervals.length;
-        int[] start = intervals[0];
+        // Sort intervals by start time
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
 
-        // start는 항상 큰값 => 그래야 0번째의 작은값을 커버할 수 있음
-        for(int x = 1; x < len; x++) {
+        List<int[]> merged = new ArrayList<>();
+        int[] current = intervals[0];
 
-            int[] cur = intervals[x];
-            int[] bef = intervals[x - 1];
-            int min = cur[0];
-            int max = cur[1];
-            int realMax = Math.max(max, start[1]);
-            int realMin = Math.min(min, start[0]);
+        for (int i = 1; i < intervals.length; i++) {
+            int[] next = intervals[i];
 
-            // 바뀌는 케이스 => 1. 값이 같을 때 start 변경됨 / 2. 작은 값이 큰 값보다 클 때(이전 인덱스 값까지 포함)
-            /*
-                바뀌는 케이스
-                - 값이 같을 때 start 변경됨
-                - 작은 값이 큰 값보다 클 때(이전 인덱스 값까지 포함)
-                - 배열의 마지막에
-             */
-            if(min >= start[1]) {
-                if(start[1] == min) {
-                    list.add(List.of(realMin, realMax));
-                    if(x < len - 1) start = intervals[x + 1];
-                } else {
-                    list.add(List.of(Math.min(start[0], bef[0]), Math.max(start[1], bef[1])));
-                    start = cur;
-                }
+            // Check if current and next intervals overlap
+            if (current[1] >= next[0]) {
+                // Merge overlapping intervals
+                current[1] = Math.max(current[1], next[1]);
             } else {
-                if(x == len - 1) {
-                    list.add(List.of(realMin, realMax));
-                }
+                // No overlap, add current to result and move to next
+                merged.add(current);
+                current = next;
             }
-
         }
 
-        int[][] ans = new int[list.size()][2];
+        // Add the last interval
+        merged.add(current);
 
-        for(int x = 0; x < list.size(); x++) {
-
-            ans[x] = list.get(x).stream().mapToInt(Integer::intValue).toArray();
-        }
-
-        return ans;
+        // Convert List to array
+        return merged.toArray(new int[merged.size()][]);
 
     }
 
