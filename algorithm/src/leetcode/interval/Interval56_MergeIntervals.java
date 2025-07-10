@@ -17,12 +17,56 @@ public class Interval56_MergeIntervals {
      */
     public int[][] merge(int[][] intervals) {
 
-        // 1. 0번쨰 인덱스 작은 순서대로 정렬
+        if(intervals.length == 1) return intervals;
+
         Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
 
-        for(int i = 0; i < intervals.length; i++){
+        List<List<Integer>> list = new ArrayList<>();
 
+        int min = intervals[0][0]; //
+        int max = intervals[0][1]; // 최대 값
+
+        for(int i = 1; i < intervals.length; i++){
+
+            int[] interval = intervals[i];
+            int loopMin = interval[0];
+            int loopMax = interval[1];
+
+            if(min == loopMin) {
+
+                max = Math.max(max, loopMax);
+
+            } else {
+
+                if(loopMin > max) {
+
+                    List<Integer> l = new ArrayList<>();
+                    l.add(min); l.add(max);
+                    list.add(l);
+
+                    min = interval[0];
+                    max = interval[1];
+
+                } else {
+
+                    max = Math.max(max, loopMax);
+                }
+            }
+
+            if(i == intervals.length - 1) {
+                List<Integer> l = new ArrayList<>();
+                l.add(min); l.add(max);
+                list.add(l);
+            }
         }
+
+        int[][] ans = new int[list.size()][];
+        for(int i = 0; i < list.size(); i ++) {
+            ans[i] = new int[]{list.get(i).get(0), list.get(i).get(1)};
+        }
+
+        return ans;
+
     }
 
     public int[][] merge2(int[][] intervals) {
