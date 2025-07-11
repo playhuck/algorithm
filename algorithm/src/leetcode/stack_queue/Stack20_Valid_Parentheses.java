@@ -12,6 +12,50 @@ public class Stack20_Valid_Parentheses {
         여는 괄호는 올바른 순서로 닫혀야 합니다.
         모든 닫는 괄호는 같은 종류의 여는 괄호와 짝을 이루어야 합니다.
      */
+    public static boolean isValid2(String s) {
+        if(s.length() <= 1) return false;
+
+        String[] strings = s.split("");
+        Stack<String> stack = new Stack<>();
+
+        for(String str : strings) {
+
+            if((str.startsWith("}") || str.endsWith(")") || str.startsWith("]"))) {
+
+                if(stack.isEmpty()) return false;
+
+                String str2 = stack.peek();
+
+                if(str.equals("}") && !str2.equals("{")) {
+
+                    return false;
+                }
+
+                if(str.equals(")") && !str2.equals("(")) {
+
+                    return false;
+                }
+
+                if(str.equals("]") && !str2.equals("[")) {
+                    return false;
+                }
+
+                stack.pop();
+
+            } else {
+
+                stack.push(str);
+
+            }
+
+        }
+
+        if(stack.size() > 0) return false;
+
+        return true;
+
+    }
+
     public static boolean isValid(String s) {
 
         /*

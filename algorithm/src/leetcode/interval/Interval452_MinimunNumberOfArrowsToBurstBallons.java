@@ -36,11 +36,9 @@ public class Interval452_MinimunNumberOfArrowsToBurstBallons {
 
             if (lMin > max) {
                 List<Integer> l = new ArrayList<>(2);
-                l.add(min);
-                l.add(max);
+                l.add(min); l.add(max);
                 list.add(l);
-                min = lMin;
-                max = lMax;
+                min = lMin;max = lMax;
             }
 
         }

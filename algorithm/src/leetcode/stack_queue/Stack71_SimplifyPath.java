@@ -24,7 +24,55 @@ public class Stack71_SimplifyPath {
 
         단순화된 정규 경로를 반환하세요.
      */
+
     static public String simplifyPath(String path) {
+
+        if(path.length() == 1 ) return path;
+
+        String[] strings = path.split("/");
+        Stack<String> stack = new Stack<>();
+
+        for(String s : strings){
+
+            stack.push(s);
+        }
+
+        /*
+            .이면 그냥 넘어감 처리 x
+            ..이면 현재 디렉토리 제외 및 상위 디렉토리 제외
+            ...은 유효한 디렉토리
+            // 이나 ///은 단일 슬래쉬 취급
+         */
+
+        StringBuilder ans = new StringBuilder();
+
+        while (!stack.isEmpty()){
+
+            if(stack.peek().equals(".")) {
+                stack.pop();
+                continue;
+            }
+
+            if(stack.peek().equals("..")){
+                stack.pop();
+                stack.pop();
+                continue;
+            }
+
+            ans.insert(0, stack.pop());
+            ans.insert(0, "/");
+
+        }
+
+        if(ans.toString().isBlank()) {
+            ans.append("/");
+        }
+
+        return ans.toString();
+
+    }
+
+    static public String simplifyPath2(String path) {
 
         String[] strings = Arrays.stream(path.split("/")).filter(s -> !s.isEmpty()).toArray(String[]::new);
 
