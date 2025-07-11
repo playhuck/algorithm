@@ -1,7 +1,6 @@
 package leetcode.stack_queue;
 
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
 public class Stack71_SimplifyPath {
     /*
@@ -29,46 +28,20 @@ public class Stack71_SimplifyPath {
 
         if(path.length() == 1 ) return path;
 
-        String[] strings = path.split("/");
-        Stack<String> stack = new Stack<>();
+        Deque<String> stack = new LinkedList<>();
+        Set<String> skip = new HashSet<>(Arrays.asList("..", ".", ""));
 
-        for(String s : strings){
-
-            stack.push(s);
+        for(String str : path.split("/")) {
+            if(str.equals("..") && !stack.isEmpty()) stack.pop();
+            else if(!skip.contains(str)) stack.push(str);
         }
 
-        /*
-            .이면 그냥 넘어감 처리 x
-            ..이면 현재 디렉토리 제외 및 상위 디렉토리 제외
-            ...은 유효한 디렉토리
-            // 이나 ///은 단일 슬래쉬 취급
-         */
-
-        StringBuilder ans = new StringBuilder();
-
-        while (!stack.isEmpty()){
-
-            if(stack.peek().equals(".")) {
-                stack.pop();
-                continue;
-            }
-
-            if(stack.peek().equals("..")){
-                stack.pop();
-                stack.pop();
-                continue;
-            }
-
-            ans.insert(0, stack.pop());
-            ans.insert(0, "/");
-
+        String ans = "";
+        for(String str : stack) {
+            ans = "/" + str + ans;
         }
 
-        if(ans.toString().isBlank()) {
-            ans.append("/");
-        }
-
-        return ans.toString();
+        return ans.isEmpty() ? "/" : ans;
 
     }
 
