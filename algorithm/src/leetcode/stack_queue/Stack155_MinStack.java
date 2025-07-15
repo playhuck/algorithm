@@ -7,52 +7,50 @@ import java.util.Stack;
 
 public class Stack155_MinStack {
 
+    /*
+        MinStack 클래스를 구현해야 합니다:
+        MinStack(): 스택 객체를 초기화합니다.
+        void push(int val): 원소 val을 스택에 푸시(push)합니다.
+        void pop(): 스택의 맨 위 원소를 제거합니다.
+        int top(): 스택의 맨 위 원소를 가져옵니다.
+        int getMin(): 스택 내의 최소 원소를 검색합니다.
+        각 함수에 대해 O(1) 시간 복잡도로 구현해야 합니다.
+
+        stack내의 개수 저장
+        min 관리
+        핵심은 최소 값이 변경됐을 때 어떻게 추적하느냐
+        숫자가 1개(최소 값이 1개만 있을 때)
+        메모이 제이션쓰면 안됨?
+        object 만들어서
+        중간 값이 들어오면?
+     */
+
     class MinStack {
 
         private final LinkedList<Integer> stack;
-        private final HashMap<Integer, Integer> minMap;
-        private final HashMap<Integer, Integer> minCount;
         private int min;
-
-        /*
-            최소 원소를 가져오려면, 현재 최소 원소가 그 다음 최소원소의 값을 알고 있는 map을 계산하면 될듯?
-         */
 
         public MinStack() {
             stack = new LinkedList<>();
-            minMap = new HashMap<>();
-            minCount = new HashMap<>();
             min = Integer.MAX_VALUE;
         }
 
         public void push(int val) {
+
+            if(val <= min) {
+                stack.push(min);
+                min = val;
+            }
+
             stack.push(val);
 
-            if(min == Integer.MAX_VALUE) {
-                min = val;
-                minMap.put(min, min);
-                minCount.put(min, minCount.getOrDefault(min, 0) + 1);
-            } else {
-                if(val <= min) {
-                    minMap.put(val, min);
-                    min = val;
-                    minCount.put(min, minCount.getOrDefault(min, 0) + 1);
-                }
-            }
         }
 
         public void pop() {
             if(stack.isEmpty()) return;
-            int pop = stack.pop();
+            if(min == stack.pop()) min = stack.pop();
 
-            if(pop == min) {
-                if(minCount.get(min) > 1) {
-                    minCount.put(min, minCount.get(min) - 1);
-                } else {
-                    min = minMap.get(min);
-                    minMap.remove(pop);
-                }
-            }
+
         }
 
         public int top() {
