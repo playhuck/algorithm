@@ -1,4 +1,4 @@
-package leetcode.binary_tree;
+package leetcode.binary_tree.prev;
 
 public class BT543 {
     /*

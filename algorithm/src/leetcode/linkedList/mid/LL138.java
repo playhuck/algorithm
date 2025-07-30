@@ -1,4 +1,4 @@
-package leetcode.linkedList.easy;
+package leetcode.linkedList.mid;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,45 +32,26 @@ public class LL138 {
      */
     public Node copyRandomList(Node head) {
 
-        Node head2 = new Node(head.val);
+        Map<Node, Node> map = new HashMap<>();
 
-        Node cur = head;
-        Node cur2 = head2;
+        Node n = head;
 
-        /*
-            next는 새롭게만들고 random은 얕은 복사
+        while (n != null) {
 
-            메모이제이션으로 풀어야 하는뎅;
-            현재 node를 저장하고 Object로 비교한 뒤 나중에 같은 노드가 나오면 거기다 매핑하는건?
-
-            random을 얕은 복사 후, map에 저장
-         */
-
-        Map<Node, Node> rMap = new HashMap<>();
-        Map<Node, Node> nMap = new HashMap<>();
-
-        while (cur.next != null) {
-
-            cur2 = cur;
-
-            if(cur.random != null) {
-                rMap.put(cur2.random,  cur2.random);
-            }
-
-            nMap.put(cur2.next, cur2.next);
-
-            cur = cur.next;
-
+            map.put(n, new Node(n.val));
+            n = n.next;
         }
 
-        cur2 = head2;
+        n = head;
 
-        while(cur2.next != null) {
+        while (n != null) {
 
-//            cur2.next =
+            map.get(n).next = map.get(n.next);
+            map.get(n).random = map.get(n.random);
+            n = n.next;
         }
 
-        return head2;
+        return map.get(head);
 
     }
 

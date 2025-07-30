@@ -1,4 +1,4 @@
-package leetcode.binary_tree;
+package leetcode.binary_tree.prev;
 
 import java.util.Objects;
 
