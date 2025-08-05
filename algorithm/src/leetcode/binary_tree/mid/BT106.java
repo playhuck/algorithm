@@ -16,47 +16,75 @@ public class BT106 {
         inorder -> 중위순회 = 왼쪽부터 쭈우우욱
         postorder -> 후위순회 = 왼쪽 오른쪽 루트
 
-        inorder의 루트노드 다음 노드와 일치하는 값 이전 값이 왼쪽 서브트리입니다.
-        그러면 왼쪽 서브트리의 첫번째 루트노드를 구하면
-
-        중위 -> [3, 5, 7, 8, 9, 10, 12, 15]
-        후위 -> [3, 7, 9, 8, 5, 12, 15, 10]
-
-        후위 마지막은 루트노드입니다.
-        후위마지막과 일치하는 중위의 인덱스 오른쪽부터 오른쪽 서브트리입니다.
-        후위마지막과 일치하는 중위의 인덱스 왼쪽까지 왼쪽 서브 트리입니다.
-        후위 정해진 array 지역 왼쪽부터 왼쪽 루트노드입니다.
-        후위 정해진 array 지역 마지막부터 오른쪽 노드입니다.
-
-        root.left = recursion(postorder, postOrderStart + 1)
-        root.right = recursion(postorder, postOrderEnd - 1)
-
-        오른쪽의 루트노드는 언제나 후위 순회위치에서 - 1 왼쪽은 후위 순회위치에서 + 1
-        왼쪽의 루트노드는 postorder[postOrderStart]
-        오른쪽의 루트노드는 postorder[전체 길이 - ]
-        35789, 5 -> 3 / 789
-        37985, 5 -> 8
-
      */
 
     public TreeNode buildTree(int[] inorder, int[] postorder) {
 
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for(int i = 0; i < inorder.length; i++) map.put(postorder[i], i);
+        return new TreeNode(0);
 
     }
 
-    public TreeNode recursion(
-            TreeNode root,
-            int[] postorder,
-            int postOrderStart,
-            int postOrderEnd) {
+    public TreeNode buildTree2(int[] inorder, int[] postorder) {
 
-        root.left = recursion(root, postorder, postOrderStart + 1, postOrderEnd);
-        root.right = recursion(root, postorder, postOrderStart - 1, postOrderEnd);
+        return buildTree2(
+                inorder,
+                0,
+                inorder.length - 1,
+                postorder,
+                0,
+                postorder.length - 1
+        );
+
+    }
+
+    public TreeNode buildTree2(
+            int[] inorder,
+            int inStart,
+            int inEnd,
+            int[] postorder,
+            int postStart,
+            int postEnd) {
+
+        if(inStart > inEnd || postStart > postEnd) return null;
+
+        int rootVal = postorder[postEnd];
+        TreeNode root = new TreeNode(rootVal); // 후위 마지막이 루트노드
+
+        int rootIndex = 0; // rootVal 기준으로 inorder의 왼쪽 서브트리와 오른쪽 서브트리가 나뉨
+        for(int i = inStart; i <= inEnd; i ++) {
+            if(inorder[i] == rootVal) {
+                rootIndex = i;
+                break;
+            }
+        }
+
+        int leftSize = rootIndex - inStart; // 중위순회에서 루트 인덱스 위치와 서브트리의 시작 사이 거리(서브트리 노드 개수)
+        int rightSize = inEnd - rootIndex; // 서브트리 끝에서 루트위치 사이 거리, 오른쪽 서브트리 개수
+
+        /*
+            중위 -> [3, 5, 7, 8, 9, 10, 12, 15]
+            후위 -> [3, 7, 9, 8, 5, 12, 15, 10]
+        */
+        root.left = buildTree2(
+                inorder, // inorder는 inStart부터 rootIndex - 1 까지 범위를 가지게 됨
+                inStart,
+                rootIndex - 1,
+                postorder, // postStart부터 시작해서 leftSize만큼의 노드를 포함함
+                postStart,
+                postStart + leftSize - 1 // -> 왼쪽 서브트리 끝
+        );
+
+        root.right = buildTree2(
+                inorder,
+                rootIndex + 1,
+                inEnd,
+                postorder,
+                postEnd - rightSize,
+                postEnd - 1
+        );
 
         return root;
+
     }
 
     public class TreeNode {
